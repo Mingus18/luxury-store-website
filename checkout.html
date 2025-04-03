@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Luxury Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Luxury Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Shopping Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="checkout">
+            <h2>Checkout</h2>
+            <div class="checkout-form">
+                <h3>Your Details</h3>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    <label for="payment">Payment Method:</label>
+                    <select id="payment" name="payment" required>
+                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="ideal">iDEAL</option>
+                        <option value="apple-pay">Apple Pay</option>
+                        <option value="google-pay">Google Pay</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                    </select>
+                </form>
+            </div>
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="order-items"></div>
+                <p id="order-total">Total: $0</p>
+            </div>
+            <button type="submit" class="place-order-button">Place Order</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Luxury Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderItemsDiv = document.getElementById('order-items');
+            const orderTotalDiv = document.getElementById('order-total');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            orderItemsDiv.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const orderItemDiv = document.createElement('div');
+                orderItemDiv.classList.add('order-item');
+                orderItemDiv.innerHTML = `
+                    <p><strong>${item.name}</strong> - $${item.price}</p>
+                `;
+                orderItemsDiv.appendChild(orderItemDiv);
+                total += parseFloat(item.price);
+            });
+
+            orderTotalDiv.textContent = `Total: $${total.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
